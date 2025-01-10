@@ -13,9 +13,9 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
 
-	"github.com/argoproj/argo-cd/v2/common"
-	"github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1"
-	"github.com/argoproj/argo-cd/v2/util/settings"
+	"github.com/argoproj/argo-cd/v3/common"
+	"github.com/argoproj/argo-cd/v3/pkg/apis/application/v1alpha1"
+	"github.com/argoproj/argo-cd/v3/util/settings"
 )
 
 const (
@@ -424,7 +424,7 @@ func TestListClusters(t *testing.T) {
 // TestClusterRaceConditionClusterSecrets reproduces a race condition
 // on the cluster secrets. The test isn't asserting anything because
 // before the fix it would cause a panic from concurrent map iteration and map write
-func TestClusterRaceConditionClusterSecrets(t *testing.T) {
+func TestClusterRaceConditionClusterSecrets(_ *testing.T) {
 	clusterSecret := &corev1.Secret{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "mycluster",

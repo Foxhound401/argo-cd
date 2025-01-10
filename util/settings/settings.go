@@ -34,14 +34,14 @@ import (
 	enginecache "github.com/argoproj/gitops-engine/pkg/cache"
 	timeutil "github.com/argoproj/pkg/time"
 
-	"github.com/argoproj/argo-cd/v2/common"
-	"github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1"
-	"github.com/argoproj/argo-cd/v2/server/settings/oidc"
-	"github.com/argoproj/argo-cd/v2/util"
-	"github.com/argoproj/argo-cd/v2/util/crypto"
-	"github.com/argoproj/argo-cd/v2/util/kube"
-	"github.com/argoproj/argo-cd/v2/util/password"
-	tlsutil "github.com/argoproj/argo-cd/v2/util/tls"
+	"github.com/argoproj/argo-cd/v3/common"
+	"github.com/argoproj/argo-cd/v3/pkg/apis/application/v1alpha1"
+	"github.com/argoproj/argo-cd/v3/server/settings/oidc"
+	"github.com/argoproj/argo-cd/v3/util"
+	"github.com/argoproj/argo-cd/v3/util/crypto"
+	"github.com/argoproj/argo-cd/v3/util/kube"
+	"github.com/argoproj/argo-cd/v3/util/password"
+	tlsutil "github.com/argoproj/argo-cd/v3/util/tls"
 )
 
 // ArgoCDSettings holds in-memory runtime configuration options.
@@ -1388,14 +1388,14 @@ func (mgr *SettingsManager) initialize(ctx context.Context) error {
 	}
 
 	eventHandler := cache.ResourceEventHandlerFuncs{
-		UpdateFunc: func(oldObj, newObj any) {
+		UpdateFunc: func(_, _ any) {
 			mgr.invalidateCache()
 			mgr.onRepoOrClusterChanged()
 		},
-		AddFunc: func(obj any) {
+		AddFunc: func(_ any) {
 			mgr.onRepoOrClusterChanged()
 		},
-		DeleteFunc: func(obj any) {
+		DeleteFunc: func(_ any) {
 			mgr.onRepoOrClusterChanged()
 		},
 	}
@@ -2176,7 +2176,7 @@ func (mgr *SettingsManager) InitializeSettings(insecureModeEnabled bool) (*ArgoC
 				if err != nil {
 					return err
 				}
-				ku := kube.NewKubeUtil(mgr.clientset, mgr.ctx)
+				ku := kube.NewKubeUtil(mgr.ctx, mgr.clientset)
 				err = ku.CreateOrUpdateSecretField(mgr.namespace, initialPasswordSecretName, initialPasswordSecretField, initialPassword)
 				if err != nil {
 					return err

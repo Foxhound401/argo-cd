@@ -28,9 +28,9 @@ import (
 	"github.com/bradleyfalzon/ghinstallation/v2"
 	log "github.com/sirupsen/logrus"
 
-	"github.com/argoproj/argo-cd/v2/common"
-	certutil "github.com/argoproj/argo-cd/v2/util/cert"
-	argoioutils "github.com/argoproj/argo-cd/v2/util/io"
+	"github.com/argoproj/argo-cd/v3/common"
+	certutil "github.com/argoproj/argo-cd/v3/util/cert"
+	argoioutils "github.com/argoproj/argo-cd/v3/util/io"
 )
 
 var (
@@ -61,14 +61,14 @@ func init() {
 
 type NoopCredsStore struct{}
 
-func (d NoopCredsStore) Add(username string, password string) string {
+func (d NoopCredsStore) Add(_ string, _ string) string {
 	return ""
 }
 
-func (d NoopCredsStore) Remove(id string) {
+func (d NoopCredsStore) Remove(_ string) {
 }
 
-func (d NoopCredsStore) Environ(id string) []string {
+func (d NoopCredsStore) Environ(_ string) []string {
 	return []string{}
 }
 
@@ -101,7 +101,7 @@ func (c NopCreds) Environ() (io.Closer, []string, error) {
 }
 
 // GetUserInfo returns empty strings for user info
-func (c NopCreds) GetUserInfo(ctx context.Context) (name string, email string, err error) {
+func (c NopCreds) GetUserInfo(_ context.Context) (name string, email string, err error) {
 	return "", "", nil
 }
 
@@ -156,7 +156,7 @@ func NewHTTPSCreds(username string, password string, clientCertData string, clie
 }
 
 // GetUserInfo returns the username and email address for the credentials, if they're available.
-func (creds HTTPSCreds) GetUserInfo(ctx context.Context) (string, string, error) {
+func (creds HTTPSCreds) GetUserInfo(_ context.Context) (string, string, error) {
 	// Email not implemented for HTTPS creds.
 	return creds.username, "", nil
 }
@@ -191,20 +191,19 @@ func (creds HTTPSCreds) Environ() (io.Closer, []string, error) {
 		// another for storing the key. If we fail to create second fail, the first
 		// must be removed.
 		certFile, err := os.CreateTemp(argoio.TempDir, "")
-		if err == nil {
-			defer certFile.Close()
-			keyFile, err = os.CreateTemp(argoio.TempDir, "")
-			if err != nil {
-				removeErr := os.Remove(certFile.Name())
-				if removeErr != nil {
-					log.Errorf("Could not remove previously created tempfile %s: %v", certFile.Name(), removeErr)
-				}
-				return NopCloser{}, nil, err
-			}
-			defer keyFile.Close()
-		} else {
+		if err != nil {
 			return NopCloser{}, nil, err
 		}
+		defer certFile.Close()
+		keyFile, err = os.CreateTemp(argoio.TempDir, "")
+		if err != nil {
+			removeErr := os.Remove(certFile.Name())
+			if removeErr != nil {
+				log.Errorf("Could not remove previously created tempfile %s: %v", certFile.Name(), removeErr)
+			}
+			return NopCloser{}, nil, err
+		}
+		defer keyFile.Close()
 
 		// We should have both temp files by now
 		httpCloser = authFilePaths([]string{certFile.Name(), keyFile.Name()})
@@ -269,7 +268,7 @@ func NewSSHCreds(sshPrivateKey string, caPath string, insecureIgnoreHostKey bool
 
 // GetUserInfo returns empty strings for user info.
 // TODO: Implement this method to return the username and email address for the credentials, if they're available.
-func (c SSHCreds) GetUserInfo(ctx context.Context) (string, string, error) {
+func (c SSHCreds) GetUserInfo(_ context.Context) (string, string, error) {
 	// User info not implemented for SSH creds.
 	return "", "", nil
 }
@@ -401,20 +400,19 @@ func (g GitHubAppCreds) Environ() (io.Closer, []string, error) {
 		// another for storing the key. If we fail to create second fail, the first
 		// must be removed.
 		certFile, err := os.CreateTemp(argoio.TempDir, "")
-		if err == nil {
-			defer certFile.Close()
-			keyFile, err = os.CreateTemp(argoio.TempDir, "")
-			if err != nil {
-				removeErr := os.Remove(certFile.Name())
-				if removeErr != nil {
-					log.Errorf("Could not remove previously created tempfile %s: %v", certFile.Name(), removeErr)
-				}
-				return NopCloser{}, nil, err
-			}
-			defer keyFile.Close()
-		} else {
+		if err != nil {
 			return NopCloser{}, nil, err
 		}
+		defer certFile.Close()
+		keyFile, err = os.CreateTemp(argoio.TempDir, "")
+		if err != nil {
+			removeErr := os.Remove(certFile.Name())
+			if removeErr != nil {
+				log.Errorf("Could not remove previously created tempfile %s: %v", certFile.Name(), removeErr)
+			}
+			return NopCloser{}, nil, err
+		}
+		defer keyFile.Close()
 
 		// We should have both temp files by now
 		httpCloser = authFilePaths([]string{certFile.Name(), keyFile.Name()})
@@ -586,7 +584,7 @@ func NewGoogleCloudCreds(jsonData string, store CredsStore) GoogleCloudCreds {
 
 // GetUserInfo returns the username and email address for the credentials, if they're available.
 // TODO: implement getting email instead of just username.
-func (c GoogleCloudCreds) GetUserInfo(ctx context.Context) (string, string, error) {
+func (c GoogleCloudCreds) GetUserInfo(_ context.Context) (string, string, error) {
 	username, err := c.getUsername()
 	if err != nil {
 		return "", "", fmt.Errorf("failed to get username from creds: %w", err)

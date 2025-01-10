@@ -11,8 +11,8 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	"github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1"
-	"github.com/argoproj/argo-cd/v2/util/settings"
+	"github.com/argoproj/argo-cd/v3/pkg/apis/application/v1alpha1"
+	"github.com/argoproj/argo-cd/v3/util/settings"
 )
 
 const (
@@ -118,11 +118,11 @@ func (db *db) GetWriteRepository(ctx context.Context, repoURL, project string) (
 	return repository, err
 }
 
-func (db *db) GetProjectRepositories(ctx context.Context, project string) ([]*v1alpha1.Repository, error) {
+func (db *db) GetProjectRepositories(project string) ([]*v1alpha1.Repository, error) {
 	return db.getRepositories(settings.ByProjectRepoIndexer, project)
 }
 
-func (db *db) GetProjectWriteRepositories(ctx context.Context, project string) ([]*v1alpha1.Repository, error) {
+func (db *db) GetProjectWriteRepositories(project string) ([]*v1alpha1.Repository, error) {
 	return db.getRepositories(settings.ByProjectRepoWriteIndexer, project)
 }
 
@@ -528,13 +528,12 @@ func (db *db) legacyRepoBackend() repositoryBackend {
 func (db *db) enrichCredsToRepo(ctx context.Context, repository *v1alpha1.Repository) error {
 	if !repository.HasCredentials() {
 		creds, err := db.GetRepositoryCredentials(ctx, repository.Repo)
-		if err == nil {
-			if creds != nil {
-				repository.CopyCredentialsFrom(creds)
-				repository.InheritedCreds = true
-			}
-		} else {
+		if err != nil {
 			return fmt.Errorf("failed to get repository credentials for %q: %w", repository.Repo, err)
+		}
+		if creds != nil {
+			repository.CopyCredentialsFrom(creds)
+			repository.InheritedCreds = true
 		}
 	} else {
 		log.Debugf("%s has credentials", repository.Repo)

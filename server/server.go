@@ -63,70 +63,70 @@ import (
 	"k8s.io/client-go/tools/cache"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
-	"github.com/argoproj/argo-cd/v2/common"
-	"github.com/argoproj/argo-cd/v2/pkg/apiclient"
-	accountpkg "github.com/argoproj/argo-cd/v2/pkg/apiclient/account"
-	applicationpkg "github.com/argoproj/argo-cd/v2/pkg/apiclient/application"
-	applicationsetpkg "github.com/argoproj/argo-cd/v2/pkg/apiclient/applicationset"
-	certificatepkg "github.com/argoproj/argo-cd/v2/pkg/apiclient/certificate"
-	clusterpkg "github.com/argoproj/argo-cd/v2/pkg/apiclient/cluster"
-	gpgkeypkg "github.com/argoproj/argo-cd/v2/pkg/apiclient/gpgkey"
-	notificationpkg "github.com/argoproj/argo-cd/v2/pkg/apiclient/notification"
-	projectpkg "github.com/argoproj/argo-cd/v2/pkg/apiclient/project"
-	repocredspkg "github.com/argoproj/argo-cd/v2/pkg/apiclient/repocreds"
-	repositorypkg "github.com/argoproj/argo-cd/v2/pkg/apiclient/repository"
-	sessionpkg "github.com/argoproj/argo-cd/v2/pkg/apiclient/session"
-	settingspkg "github.com/argoproj/argo-cd/v2/pkg/apiclient/settings"
-	versionpkg "github.com/argoproj/argo-cd/v2/pkg/apiclient/version"
-	"github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1"
-	appclientset "github.com/argoproj/argo-cd/v2/pkg/client/clientset/versioned"
-	appinformer "github.com/argoproj/argo-cd/v2/pkg/client/informers/externalversions"
-	applisters "github.com/argoproj/argo-cd/v2/pkg/client/listers/application/v1alpha1"
-	repoapiclient "github.com/argoproj/argo-cd/v2/reposerver/apiclient"
-	repocache "github.com/argoproj/argo-cd/v2/reposerver/cache"
-	"github.com/argoproj/argo-cd/v2/server/account"
-	"github.com/argoproj/argo-cd/v2/server/application"
-	"github.com/argoproj/argo-cd/v2/server/applicationset"
-	"github.com/argoproj/argo-cd/v2/server/badge"
-	servercache "github.com/argoproj/argo-cd/v2/server/cache"
-	"github.com/argoproj/argo-cd/v2/server/certificate"
-	"github.com/argoproj/argo-cd/v2/server/cluster"
-	"github.com/argoproj/argo-cd/v2/server/extension"
-	"github.com/argoproj/argo-cd/v2/server/gpgkey"
-	"github.com/argoproj/argo-cd/v2/server/logout"
-	"github.com/argoproj/argo-cd/v2/server/metrics"
-	"github.com/argoproj/argo-cd/v2/server/notification"
-	"github.com/argoproj/argo-cd/v2/server/project"
-	"github.com/argoproj/argo-cd/v2/server/rbacpolicy"
-	"github.com/argoproj/argo-cd/v2/server/repocreds"
-	"github.com/argoproj/argo-cd/v2/server/repository"
-	"github.com/argoproj/argo-cd/v2/server/session"
-	"github.com/argoproj/argo-cd/v2/server/settings"
-	"github.com/argoproj/argo-cd/v2/server/version"
-	"github.com/argoproj/argo-cd/v2/ui"
-	"github.com/argoproj/argo-cd/v2/util/assets"
-	cacheutil "github.com/argoproj/argo-cd/v2/util/cache"
-	"github.com/argoproj/argo-cd/v2/util/db"
-	dexutil "github.com/argoproj/argo-cd/v2/util/dex"
-	"github.com/argoproj/argo-cd/v2/util/env"
-	errorsutil "github.com/argoproj/argo-cd/v2/util/errors"
-	grpc_util "github.com/argoproj/argo-cd/v2/util/grpc"
-	"github.com/argoproj/argo-cd/v2/util/healthz"
-	httputil "github.com/argoproj/argo-cd/v2/util/http"
-	"github.com/argoproj/argo-cd/v2/util/io"
-	"github.com/argoproj/argo-cd/v2/util/io/files"
-	jwtutil "github.com/argoproj/argo-cd/v2/util/jwt"
-	kubeutil "github.com/argoproj/argo-cd/v2/util/kube"
-	service "github.com/argoproj/argo-cd/v2/util/notification/argocd"
-	"github.com/argoproj/argo-cd/v2/util/notification/k8s"
-	settings_notif "github.com/argoproj/argo-cd/v2/util/notification/settings"
-	"github.com/argoproj/argo-cd/v2/util/oidc"
-	"github.com/argoproj/argo-cd/v2/util/rbac"
-	util_session "github.com/argoproj/argo-cd/v2/util/session"
-	settings_util "github.com/argoproj/argo-cd/v2/util/settings"
-	"github.com/argoproj/argo-cd/v2/util/swagger"
-	tlsutil "github.com/argoproj/argo-cd/v2/util/tls"
-	"github.com/argoproj/argo-cd/v2/util/webhook"
+	"github.com/argoproj/argo-cd/v3/common"
+	"github.com/argoproj/argo-cd/v3/pkg/apiclient"
+	accountpkg "github.com/argoproj/argo-cd/v3/pkg/apiclient/account"
+	applicationpkg "github.com/argoproj/argo-cd/v3/pkg/apiclient/application"
+	applicationsetpkg "github.com/argoproj/argo-cd/v3/pkg/apiclient/applicationset"
+	certificatepkg "github.com/argoproj/argo-cd/v3/pkg/apiclient/certificate"
+	clusterpkg "github.com/argoproj/argo-cd/v3/pkg/apiclient/cluster"
+	gpgkeypkg "github.com/argoproj/argo-cd/v3/pkg/apiclient/gpgkey"
+	notificationpkg "github.com/argoproj/argo-cd/v3/pkg/apiclient/notification"
+	projectpkg "github.com/argoproj/argo-cd/v3/pkg/apiclient/project"
+	repocredspkg "github.com/argoproj/argo-cd/v3/pkg/apiclient/repocreds"
+	repositorypkg "github.com/argoproj/argo-cd/v3/pkg/apiclient/repository"
+	sessionpkg "github.com/argoproj/argo-cd/v3/pkg/apiclient/session"
+	settingspkg "github.com/argoproj/argo-cd/v3/pkg/apiclient/settings"
+	versionpkg "github.com/argoproj/argo-cd/v3/pkg/apiclient/version"
+	"github.com/argoproj/argo-cd/v3/pkg/apis/application/v1alpha1"
+	appclientset "github.com/argoproj/argo-cd/v3/pkg/client/clientset/versioned"
+	appinformer "github.com/argoproj/argo-cd/v3/pkg/client/informers/externalversions"
+	applisters "github.com/argoproj/argo-cd/v3/pkg/client/listers/application/v1alpha1"
+	repoapiclient "github.com/argoproj/argo-cd/v3/reposerver/apiclient"
+	repocache "github.com/argoproj/argo-cd/v3/reposerver/cache"
+	"github.com/argoproj/argo-cd/v3/server/account"
+	"github.com/argoproj/argo-cd/v3/server/application"
+	"github.com/argoproj/argo-cd/v3/server/applicationset"
+	"github.com/argoproj/argo-cd/v3/server/badge"
+	servercache "github.com/argoproj/argo-cd/v3/server/cache"
+	"github.com/argoproj/argo-cd/v3/server/certificate"
+	"github.com/argoproj/argo-cd/v3/server/cluster"
+	"github.com/argoproj/argo-cd/v3/server/extension"
+	"github.com/argoproj/argo-cd/v3/server/gpgkey"
+	"github.com/argoproj/argo-cd/v3/server/logout"
+	"github.com/argoproj/argo-cd/v3/server/metrics"
+	"github.com/argoproj/argo-cd/v3/server/notification"
+	"github.com/argoproj/argo-cd/v3/server/project"
+	"github.com/argoproj/argo-cd/v3/server/rbacpolicy"
+	"github.com/argoproj/argo-cd/v3/server/repocreds"
+	"github.com/argoproj/argo-cd/v3/server/repository"
+	"github.com/argoproj/argo-cd/v3/server/session"
+	"github.com/argoproj/argo-cd/v3/server/settings"
+	"github.com/argoproj/argo-cd/v3/server/version"
+	"github.com/argoproj/argo-cd/v3/ui"
+	"github.com/argoproj/argo-cd/v3/util/assets"
+	cacheutil "github.com/argoproj/argo-cd/v3/util/cache"
+	"github.com/argoproj/argo-cd/v3/util/db"
+	dexutil "github.com/argoproj/argo-cd/v3/util/dex"
+	"github.com/argoproj/argo-cd/v3/util/env"
+	errorsutil "github.com/argoproj/argo-cd/v3/util/errors"
+	grpc_util "github.com/argoproj/argo-cd/v3/util/grpc"
+	"github.com/argoproj/argo-cd/v3/util/healthz"
+	httputil "github.com/argoproj/argo-cd/v3/util/http"
+	"github.com/argoproj/argo-cd/v3/util/io"
+	"github.com/argoproj/argo-cd/v3/util/io/files"
+	jwtutil "github.com/argoproj/argo-cd/v3/util/jwt"
+	kubeutil "github.com/argoproj/argo-cd/v3/util/kube"
+	service "github.com/argoproj/argo-cd/v3/util/notification/argocd"
+	"github.com/argoproj/argo-cd/v3/util/notification/k8s"
+	settings_notif "github.com/argoproj/argo-cd/v3/util/notification/settings"
+	"github.com/argoproj/argo-cd/v3/util/oidc"
+	"github.com/argoproj/argo-cd/v3/util/rbac"
+	util_session "github.com/argoproj/argo-cd/v3/util/session"
+	settings_util "github.com/argoproj/argo-cd/v3/util/settings"
+	"github.com/argoproj/argo-cd/v3/util/swagger"
+	tlsutil "github.com/argoproj/argo-cd/v3/util/tls"
+	"github.com/argoproj/argo-cd/v3/util/webhook"
 )
 
 const (
@@ -304,8 +304,8 @@ func NewServer(ctx context.Context, opts ArgoCDServerOpts, appsetOpts Applicatio
 	if len(opts.ApplicationNamespaces) > 0 {
 		appInformerNs = ""
 	}
-	projFactory := appinformer.NewSharedInformerFactoryWithOptions(opts.AppClientset, 0, appinformer.WithNamespace(opts.Namespace), appinformer.WithTweakListOptions(func(options *metav1.ListOptions) {}))
-	appFactory := appinformer.NewSharedInformerFactoryWithOptions(opts.AppClientset, 0, appinformer.WithNamespace(appInformerNs), appinformer.WithTweakListOptions(func(options *metav1.ListOptions) {}))
+	projFactory := appinformer.NewSharedInformerFactoryWithOptions(opts.AppClientset, 0, appinformer.WithNamespace(opts.Namespace), appinformer.WithTweakListOptions(func(_ *metav1.ListOptions) {}))
+	appFactory := appinformer.NewSharedInformerFactoryWithOptions(opts.AppClientset, 0, appinformer.WithNamespace(appInformerNs), appinformer.WithTweakListOptions(func(_ *metav1.ListOptions) {}))
 
 	projInformer := projFactory.Argoproj().V1alpha1().AppProjects().Informer()
 	projLister := projFactory.Argoproj().V1alpha1().AppProjects().Lister().AppProjects(opts.Namespace)
@@ -606,7 +606,7 @@ func (server *ArgoCDServer) Run(ctx context.Context, listeners *Listeners) {
 			// gRPC clients know we support http2 for their communication.
 			NextProtos: []string{"http/1.1", "h2"},
 		}
-		tlsConfig.GetCertificate = func(info *tls.ClientHelloInfo) (*tls.Certificate, error) {
+		tlsConfig.GetCertificate = func(_ *tls.ClientHelloInfo) (*tls.Certificate, error) {
 			return server.settings.Certificate, nil
 		}
 		if server.TLSConfigCustomizer != nil {
@@ -933,7 +933,7 @@ func (server *ArgoCDServer) newGRPCServer() (*grpc.Server, application.AppResour
 		grpc_prometheus.StreamServerInterceptor,
 		grpc_auth.StreamServerInterceptor(server.Authenticate),
 		grpc_util.UserAgentStreamServerInterceptor(common.ArgoCDUserAgentName, clientConstraint),
-		grpc_util.PayloadStreamServerInterceptor(server.log, true, func(ctx context.Context, fullMethodName string, servingObject any) bool {
+		grpc_util.PayloadStreamServerInterceptor(server.log, true, func(_ context.Context, fullMethodName string, _ any) bool {
 			return !sensitiveMethods[fullMethodName]
 		}),
 		grpc_util.ErrorCodeK8sStreamServerInterceptor(),
@@ -947,7 +947,7 @@ func (server *ArgoCDServer) newGRPCServer() (*grpc.Server, application.AppResour
 		grpc_prometheus.UnaryServerInterceptor,
 		grpc_auth.UnaryServerInterceptor(server.Authenticate),
 		grpc_util.UserAgentUnaryServerInterceptor(common.ArgoCDUserAgentName, clientConstraint),
-		grpc_util.PayloadUnaryServerInterceptor(server.log, true, func(ctx context.Context, fullMethodName string, servingObject any) bool {
+		grpc_util.PayloadUnaryServerInterceptor(server.log, true, func(_ context.Context, fullMethodName string, _ any) bool {
 			return !sensitiveMethods[fullMethodName]
 		}),
 		grpc_util.ErrorCodeK8sUnaryServerInterceptor(),
@@ -1196,19 +1196,19 @@ func (server *ArgoCDServer) newHTTPServer(ctx context.Context, port int, grpcWeb
 		registerExtensions(mux, server, metricsReg)
 	}
 
-	mustRegisterGWHandler(versionpkg.RegisterVersionServiceHandler, ctx, gwmux, conn)
-	mustRegisterGWHandler(clusterpkg.RegisterClusterServiceHandler, ctx, gwmux, conn)
-	mustRegisterGWHandler(applicationpkg.RegisterApplicationServiceHandler, ctx, gwmux, conn)
-	mustRegisterGWHandler(applicationsetpkg.RegisterApplicationSetServiceHandler, ctx, gwmux, conn)
-	mustRegisterGWHandler(notificationpkg.RegisterNotificationServiceHandler, ctx, gwmux, conn)
-	mustRegisterGWHandler(repositorypkg.RegisterRepositoryServiceHandler, ctx, gwmux, conn)
-	mustRegisterGWHandler(repocredspkg.RegisterRepoCredsServiceHandler, ctx, gwmux, conn)
-	mustRegisterGWHandler(sessionpkg.RegisterSessionServiceHandler, ctx, gwmux, conn)
-	mustRegisterGWHandler(settingspkg.RegisterSettingsServiceHandler, ctx, gwmux, conn)
-	mustRegisterGWHandler(projectpkg.RegisterProjectServiceHandler, ctx, gwmux, conn)
-	mustRegisterGWHandler(accountpkg.RegisterAccountServiceHandler, ctx, gwmux, conn)
-	mustRegisterGWHandler(certificatepkg.RegisterCertificateServiceHandler, ctx, gwmux, conn)
-	mustRegisterGWHandler(gpgkeypkg.RegisterGPGKeyServiceHandler, ctx, gwmux, conn)
+	mustRegisterGWHandler(ctx, versionpkg.RegisterVersionServiceHandler, gwmux, conn)
+	mustRegisterGWHandler(ctx, clusterpkg.RegisterClusterServiceHandler, gwmux, conn)
+	mustRegisterGWHandler(ctx, applicationpkg.RegisterApplicationServiceHandler, gwmux, conn)
+	mustRegisterGWHandler(ctx, applicationsetpkg.RegisterApplicationSetServiceHandler, gwmux, conn)
+	mustRegisterGWHandler(ctx, notificationpkg.RegisterNotificationServiceHandler, gwmux, conn)
+	mustRegisterGWHandler(ctx, repositorypkg.RegisterRepositoryServiceHandler, gwmux, conn)
+	mustRegisterGWHandler(ctx, repocredspkg.RegisterRepoCredsServiceHandler, gwmux, conn)
+	mustRegisterGWHandler(ctx, sessionpkg.RegisterSessionServiceHandler, gwmux, conn)
+	mustRegisterGWHandler(ctx, settingspkg.RegisterSettingsServiceHandler, gwmux, conn)
+	mustRegisterGWHandler(ctx, projectpkg.RegisterProjectServiceHandler, gwmux, conn)
+	mustRegisterGWHandler(ctx, accountpkg.RegisterAccountServiceHandler, gwmux, conn)
+	mustRegisterGWHandler(ctx, certificatepkg.RegisterCertificateServiceHandler, gwmux, conn)
+	mustRegisterGWHandler(ctx, gpgkeypkg.RegisterGPGKeyServiceHandler, gwmux, conn)
 
 	// Swagger UI
 	swagger.ServeSwaggerUI(mux, assets.SwaggerJSON, "/swagger-ui", server.RootPath)
@@ -1458,7 +1458,7 @@ func isMainJsBundle(url *url.URL) bool {
 type registerFunc func(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error
 
 // mustRegisterGWHandler is a convenience function to register a gateway handler
-func mustRegisterGWHandler(register registerFunc, ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) {
+func mustRegisterGWHandler(ctx context.Context, register registerFunc, mux *runtime.ServeMux, conn *grpc.ClientConn) {
 	err := register(ctx, mux, conn)
 	if err != nil {
 		panic(err)
@@ -1500,10 +1500,9 @@ func (server *ArgoCDServer) Authenticate(ctx context.Context) (context.Context, 
 		}
 		if !argoCDSettings.AnonymousUserEnabled {
 			return ctx, claimsErr
-		} else {
-			// nolint:staticcheck
-			ctx = context.WithValue(ctx, "claims", "")
 		}
+		// nolint:staticcheck
+		ctx = context.WithValue(ctx, "claims", "")
 	}
 
 	return ctx, nil
